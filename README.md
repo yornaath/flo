@@ -1,5 +1,5 @@
 #flo
-flo is a library for managing the flow of your code and application. It has functions for performing varius async tasks in paralell or series.
+flo is a library for managing the flow of your code and application. It has functions for performing varius async tasks in parallel or series.
 
 ###flo.parallel
 Run several async tasks in paralell and execute a callback when everyone of them is finished. The callback recieves a results array or object depending on the tasks collection type.
