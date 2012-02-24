@@ -22,6 +22,8 @@ require([
 })
 ```
 
+## Using
+
 ###flo.parallel
 Run several async tasks in paralell and execute a callback when everyone of them is finished. The callback recieves a results array or object depending on the tasks collection type.
 Returns a promise object that is either failed if a callback receives error, or fulfilled if all passes. Se /classes/Promise docs for reference.
