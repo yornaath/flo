@@ -1,6 +1,27 @@
 #flo
 flo is a library for managing the flow of your code and application. It has functions for performing varius async tasks in parallel or series.
 
+## Installing
+For use with nodejs just use npm
+
+```
+$ npm install flo
+```
+
+```javascript
+var flo = require('flo')
+```
+
+For use in the browser, the library can be required by a AMD module loader, for example requirejs  
+
+```javascript
+require([
+  'flo/flo.j'  
+], function(flo){
+  flo.parallel...
+})
+```
+
 ###flo.parallel
 Run several async tasks in paralell and execute a callback when everyone of them is finished. The callback recieves a results array or object depending on the tasks collection type.
 Returns a promise object that is either failed if a callback receives error, or fulfilled if all passes. Se /classes/Promise docs for reference.
