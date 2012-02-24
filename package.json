@@ -1,6 +1,6 @@
 {
   "author": "Andre Tangen @gorillatron <jornandretangen@gmail.com>",
-  "name": "flo",
+  "name": "node-flo",
   "description": "Control flow library for nodejs and the browser",
   "version": "0.0.1",
   "repository": {

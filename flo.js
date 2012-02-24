@@ -21,17 +21,17 @@
 
 ],function(Promise, array, splat) {
   
-  var async;
+  var flo;
 
-  //##async  
+  //##flo  
   //_________
-  async = {}
+  flo = {}
 
-  //###async.parallel  
+  //###flo.parallel  
   //Runs tasks in paralell. Fulfills or fails the returned promise if a task callbacks with error.  
   //@param: tasks {Array[Function] || object[name] = Function}  
   //@returns: Promise  
-  async.parallel = function(tasks) {
+  flo.parallel = function(tasks) {
     var promise,
         index,
         length,
@@ -67,11 +67,11 @@
     return promise    
   }
 
-  //###async.series
+  //###flo.series
   //Runs tasks in a series. Invokes next task only when current has callbacked. Fulfills or fails promise of a task callbacks with error.  
   //@param: tasks {Array[Function] || object[name] = Function}
   //@returns: Promise  
-  async.series = function(tasks) {
+  flo.series = function(tasks) {
     var promise,
         results;
     promise = new Promise()
@@ -103,11 +103,11 @@
     return promise;    
   }
 
-  //###async.pipeline  
+  //###flo.pipeline  
   //Runs tasks in sequence, same as series. Splat arguments passed to task callback is passed along as arguments to next task.   
   //@param: tasks{Array[function]}    
   //@returns: Promise  
-  async.pipeline = function(tasks) {
+  flo.pipeline = function(tasks) {
     var promise,
         args;
     promise = new Promise();
@@ -136,19 +136,19 @@
     return promise
   }
 
-  //###async.whilst  
+  //###flo.whilst  
   //Runs task while test returns truthy.  
   //@param: test{Function}  
   //@param: task{Function}  
   //@param: cb{Function}  
-  async.whilst = function(test, task, cb) {
+  flo.whilst = function(test, task, cb) {
     if(test()){
       task(function(err) {
         if(err){
           return cb.apply(this, [err])
         }
         setTimeout(function() {
-          async.whilst(test, task, cb)
+          flo.whilst(test, task, cb)
         }, 0)
       })
     } else {
@@ -156,19 +156,19 @@
     }
   };
 
-  //###async.until    
+  //###flo.until    
   //Runs task until test returns falsy.  
   //@param: test{Function}  
   //@param: task{Function}  
   //@param: cb{Function}  
-  async.until = function(test, task, cb) {
+  flo.until = function(test, task, cb) {
     if(!test()){
       task(function(err) {
         if(err){
           return cb.apply(this, [err])
         } 
         setTimeout(function() {
-          async.until(test, task, cb)
+          flo.until(test, task, cb)
         }, 0)
       })
     } else {
@@ -176,24 +176,24 @@
     }
   };
 
-  //###async.apply    
+  //###flo.apply    
   //Returns a function that runs the passed function with passed arguments splatt as arguments
   //@param: fn{Function}  
   //@param: args{splat Arguments}
-  async.apply = function(fn) {
+  flo.apply = function(fn) {
     var self,
         _splat;
     self = this;
     _splat = splat(arguments, 1)
     if(typeof fn !== 'function') {
-      throw new Error('async.apply first argument not function')
+      throw new Error('flo.apply first argument not function')
     }
     return function() {
       return fn.apply(self, _splat)
     }
   }
 
-  return async
+  return flo
 })
 
 
