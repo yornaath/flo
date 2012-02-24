@@ -16,7 +16,7 @@ For use in the browser, the library can be required by a AMD module loader, for 
 
 ```javascript
 require([
-  'flo/flo.j'  
+  './lib/flo/flo.js'  
 ], function(flo){
   flo.parallel...
 })
