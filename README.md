@@ -128,6 +128,6 @@ flo
 The jasmine test framework is ised to test the code. To run the tests do one of the following:
 
 ```
-$ cd gorillajs
+$ cd flo
 $ npm test
 ```
