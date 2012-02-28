@@ -93,11 +93,11 @@
       if(err){
         flo.nextTick(function() {
           promise.fail(err)
-        },0) 
+        }) 
       } else {
         flo.nextTick(function() {
           promise.fulfill(results)
-        },0)
+        })
       }
     })
     return promise;    
@@ -126,11 +126,11 @@
       if(err) {
         flo.nextTick(function() {
           promise.fail(err)
-        },0)
+        })
       } else {
         flo.nextTick(function() {
           promise.fulfill.apply(promise, args)
-        },0)
+        })
       }
     })
     return promise
@@ -149,7 +149,7 @@
         }
         flo.nextTick(function() {
           flo.whilst(test, task, cb)
-        }, 0)
+        })
       })
     } else {
       cb.apply(this)
@@ -169,7 +169,7 @@
         } 
         flo.nextTick(function() {
           flo.until(test, task, cb)
-        }, 0)
+        })
       })
     } else {
       cb.apply(this)
