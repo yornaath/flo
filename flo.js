@@ -197,7 +197,7 @@
   //Run a function at the next tick of the eventlopp
   //@param: fn[function]
   flo.nextTick = (function() {
-    if(process.nextTick) {
+    if(typeof process != 'undefined' && process.nextTick) {
       return function(fn) {
         process.nextTick(fn)
       }
