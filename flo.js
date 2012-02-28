@@ -29,13 +29,13 @@
 
   //###flo.parallel  
   //Runs tasks in paralell. Fulfills or fails the returned promise if a task callbacks with error.  
-  //@param: tasks {Array[Function] || object[name] = Function}  
+  //@param: tasks [Array[Function] || object[name] = Function]  
   //@returns: Promise  
   flo.parallel = function(tasks) {
     var promise,
         index,
-        length,
         results,
+        length,
         error;
     promise = new Promise
     index = 0;
@@ -50,17 +50,17 @@
       task(function(err, val) {
         if(err){
           error = err
-          setTimeout(function() {
+          flo.nextTick(function() {
             promise.fail(error)
-          },0)
+          })
         } else {
           results[key] = val
         }
         index++
         if(index === length && !error){
-          setTimeout(function() {
+          flo.nextTick(function() {
             promise.fulfill(results)
-          },0)
+          })
         }
       })
     })
@@ -69,7 +69,7 @@
 
   //###flo.series
   //Runs tasks in a series. Invokes next task only when current has callbacked. Fulfills or fails promise of a task callbacks with error.  
-  //@param: tasks {Array[Function] || object[name] = Function}
+  //@param: tasks [Array[Function] || object[name] = Function]
   //@returns: Promise  
   flo.series = function(tasks) {
     var promise,
@@ -91,11 +91,11 @@
       })
     }, function(err) {
       if(err){
-        setTimeout(function() {
+        flo.nextTick(function() {
           promise.fail(err)
         },0) 
       } else {
-        setTimeout(function() {
+        flo.nextTick(function() {
           promise.fulfill(results)
         },0)
       }
@@ -105,7 +105,7 @@
 
   //###flo.pipeline  
   //Runs tasks in sequence, same as series. Splat arguments passed to task callback is passed along as arguments to next task.   
-  //@param: tasks{Array[function]}    
+  //@param: tasks[Array[function]]    
   //@returns: Promise  
   flo.pipeline = function(tasks) {
     var promise,
@@ -124,11 +124,11 @@
       task.apply(task, args)
     }, function(err) {
       if(err) {
-        setTimeout(function() {
+        flo.nextTick(function() {
           promise.fail(err)
         },0)
       } else {
-        setTimeout(function() {
+        flo.nextTick(function() {
           promise.fulfill.apply(promise, args)
         },0)
       }
@@ -138,16 +138,16 @@
 
   //###flo.whilst  
   //Runs task while test returns truthy.  
-  //@param: test{Function}  
-  //@param: task{Function}  
-  //@param: cb{Function}  
+  //@param: test[Function]  
+  //@param: task[Function]  
+  //@param: cb[Function]  
   flo.whilst = function(test, task, cb) {
     if(test()){
       task(function(err) {
         if(err){
           return cb.apply(this, [err])
         }
-        setTimeout(function() {
+        flo.nextTick(function() {
           flo.whilst(test, task, cb)
         }, 0)
       })
@@ -158,16 +158,16 @@
 
   //###flo.until    
   //Runs task until test returns falsy.  
-  //@param: test{Function}  
-  //@param: task{Function}  
-  //@param: cb{Function}  
+  //@param: test[Function]  
+  //@param: task[Function]    
+  //@param: cb[Function]
   flo.until = function(test, task, cb) {
     if(!test()){
       task(function(err) {
         if(err){
           return cb.apply(this, [err])
         } 
-        setTimeout(function() {
+        flo.nextTick(function() {
           flo.until(test, task, cb)
         }, 0)
       })
@@ -178,8 +178,8 @@
 
   //###flo.apply    
   //Returns a function that runs the passed function with passed arguments splatt as arguments
-  //@param: fn{Function}  
-  //@param: args{splat Arguments}
+  //@param: fn[Function] 
+  //@param: args[splat Arguments]
   flo.apply = function(fn) {
     var self,
         _splat;
@@ -192,6 +192,20 @@
       return fn.apply(self, _splat)
     }
   }
+
+  //###flo.nextTick
+  //Run a function at the next tick of the eventlopp
+  //@param: fn[function]
+  flo.nextTick = (function() {
+    if(process.nextTick) {
+      return function(fn) {
+        process.nextTick(fn)
+      }
+    }
+    return function(fn) {
+      setTimeout(fn, 0)
+    }
+  })();
 
   return flo
 })
