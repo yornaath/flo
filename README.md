@@ -12,11 +12,11 @@ $ npm install flo
 var flo = require('flo')
 ```
 
-For use in the browser, the library can be required by a AMD module loader, for example requirejs  
+For use in the browser, the library can be required by a AMD module loader as a package. Under is an example using requirejs.  
 
 ```javascript
 require([
-  './lib/flo/flo.js'  
+  './path/to/flo'  
 ], function(flo){
   flo.parallel...
 })

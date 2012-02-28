@@ -6,7 +6,7 @@
   "repository": {
     "url": ""
   },
-  "main": "index.js",
+  "main": "flo.js",
   "engines": {
     "node": "0.4.0"
   },
